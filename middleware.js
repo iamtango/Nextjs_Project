@@ -12,7 +12,7 @@ export default withAuth(
       // authorized: ({ token }) => !!token || token?.role === "admin",
       authorized: ({ req, token }) => {
         console.log("token In middleware0", token);
-        if (req.nextUrl.pathname.startsWith("/customers") && token === null) {
+        if (req.nextUrl.pathname.startsWith("/admin") && token === null) {
           return false;
         }
         return true;
@@ -20,4 +20,4 @@ export default withAuth(
     },
   }
 );
-// export const config = { matcher: ["/customer"] };
+// export const config = { matcher: ["/help-topics"] };

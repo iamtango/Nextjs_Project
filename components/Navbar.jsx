@@ -14,15 +14,16 @@ const user = {
     "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
 };
 const navigation = [
-  { name: "Dashboard", href: "/customer", current: false },
-  { name: "Team", href: "/team", current: false },
+  { name: "Dashboard", href: "/help-topics", current: false },
+  { name: "Lable Detail", href: "/help-topics/label", current: false },
+  { name: "Category Detail", href: "/help-topics/category", current: false },
+  { name: "New Help Topic", href: "/help-topics/topic", current: false },
   { name: "Projects", href: "/project", current: false },
-  { name: "Calendar", href: "/calendar", current: false },
 ];
 const userNavigation = [
   { name: "Admin Profile", href: "/scp/admin" },
   { name: "Agent Profile", href: "/scp/agent" },
-  { name: "Customer Profile", href: "/customer" },
+  { name: "Customer Profile", href: "/help-topics" },
   { name: "Settings", href: "#" },
 ];
 

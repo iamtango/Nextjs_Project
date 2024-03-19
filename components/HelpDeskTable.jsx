@@ -1,17 +1,21 @@
-"use client";
 import { useEffect, useMemo, useState } from "react";
 import { useTable, useSortBy, usePagination } from "react-table";
+
+import DeleteConfirmModel from "./commanComponents/DeleteConfirmModel";
+import { useSession } from "next-auth/react";
+import { Help_Topic_URL } from "@/config/constant";
+import UpdateOrPostTopicModel from "./UpdateOrPostTopicModel";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import * as Yup from "yup";
+import Tabelmodel from "./commanComponents/Tabelmodel";
+import SearchModel from "./commanComponents/SearchModel";
 import {
   ChevronRightIcon,
   ChevronLeftIcon,
   TrashIcon,
   ArrowUpOnSquareIcon,
 } from "@heroicons/react/20/solid";
-import SearchModel from "./SearchModel";
-import DeleteConfirmModel from "./DeleteConfirmModel";
-import UpdateOrPostTopicModel from "./UpdateOrPostTopicModel";
-import { useSession } from "next-auth/react";
-import Signin from "./Signin";
 
 export default function HelpDeskTable({
   data,
@@ -20,27 +24,32 @@ export default function HelpDeskTable({
   filterHelpTopics,
   setFilterHelpTopics,
 }) {
-  console.log("helpTopics:", helpTopics);
-  console.log("filterHelpTopics:", filterHelpTopics);
-
   const [searchText, setSearchText] = useState("");
   const [showPostModal, setShowPostModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [deleteId, setDeleteId] = useState(null);
+
   const [paginationButtons, setPaginationButtons] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
+  const [slug, setSlug] = useState("");
   const [postTopic, setPostTopic] = useState({
-    id: null,
-    help_topic: "",
-    status: "",
-    autoresponse: "",
-    inventory_type: "",
-    department: "",
+    ...helpTopics,
+    name: "",
+    auth_code: "",
+    dept_id: "",
     priority: "",
+    status: "",
+    autoresp: "",
   });
-
   const { data: session } = useSession();
-  console.log("Session in Customer", session?.user?.token);
+
+  const validationSchema = Yup.object({
+    name: Yup.string().required("Help Topic is required"),
+    auth_code: Yup.string().required("Auth Code is required"),
+    dept_id: Yup.string().required("Department is required"),
+    priority: Yup.string().required("Ticket Priority is required"),
+    status: Yup.string().required("Status is required"),
+  });
 
   const Help_Topic_URL = "http://192.168.0.125:91/api/help-topics";
 
@@ -79,6 +88,10 @@ export default function HelpDeskTable({
   useEffect(() => {
     setHelpTopics(data);
     setFilterHelpTopics(data);
+  }, []);
+
+  useEffect(() => {
+    fetchData();
   }, []);
 
   useEffect(() => {
@@ -219,6 +232,202 @@ export default function HelpDeskTable({
       console.error("Error:", error);
     }
   };
+  // const fetchData = async (pageNumber = 1, searchText = "") => {
+  //   try {
+  //     if (!session?.user?.token) {
+  //       console.log("No bearer token available.");
+  //       return;
+  //     }
+  //     const searchQuery = searchText ? `&search=${searchText}` : "";
+  //     const response = await fetch(
+  //       `${Help_Topic_URL}?page=${pageNumber}&${searchQuery}`,
+  //       {
+  //         headers: {
+  //           Authorization: `Bearer ${session?.user?.token}`,
+  //         },
+  //       }
+  //     );
+  //     // console.log("response:", response);
+  //     if (response.ok) {
+  //       const data = await response.json();
+  //       // console.log("Response data available ->", data);
+  //       setHelpTopics(data.data);
+  //       setFilterHelpTopics(data.data);
+  //       const lastPage = data.meta.last_page;
+  //       const buttons = [];
+  //       for (let i = 1; i <= lastPage; i++) {
+  //         buttons.push(i);
+  //       }
+  //       setPaginationButtons(buttons);
+  //       if (searchText && lastPage > 1) {
+  //         setCurrentPage(1);
+  //       }
+  //     } else {
+  //       console.error("Error fetching data:", response.statusText);
+  //     }
+  //   } catch (error) {
+  //     console.error("Error:", error);
+  //   }
+  // };
+
+  // const handleHelpTopic = () => {
+  //   setShowPostModal(true);
+  //   setPostTopic({
+  //     ...postTopic,
+  //     slug: undefined,
+  //     name: "",
+  //     auth_code: "",
+  //     dept_id: "",
+  //     priority: "",
+  //     status: "",
+  //     autoresp: "",
+  //   });
+  // };
+
+  // const handleHelpTopicSubmit = async (values) => {
+  //   try {
+  //     console.log("values are here", values);
+  //     if (
+  //       !values.name ||
+  //       !values.auth_code ||
+  //       !values.priority ||
+  //       !values.dept_id ||
+  //       !values.status
+  //     ) {
+  //       toast.error("Please fill in all required fields.");
+  //       return;
+  //     }
+  //     const response = await fetch(Help_Topic_URL, {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //         Authorization: `Bearer ${session?.user?.token}`,
+  //       },
+  //       body: JSON.stringify({
+  //         ...values,
+  //       }),
+  //     });
+  //     // console.log("values here in the post", values);
+  //     if (!response.ok) {
+  //       console.log("Failed to submit data");
+  //     } else {
+  //       toast.success("Data submitted successfully");
+  //       fetchData();
+  //       setShowPostModal(false);
+  //       setOpen(false);
+
+  //       setPostTopic({
+  //         ...postTopic,
+  //         name: "",
+  //         auth_code: "",
+  //         dept_id: "",
+  //         status: "",
+  //         priority: "",
+  //         autoresp: "",
+  //       });
+  //     }
+  //   } catch (error) {
+  //     console.error("Error submitting data:", error.message);
+  //   }
+  // };
+
+  // const handleTopicDelete = async (slug) => {
+  //   // console.log(`Delete ${slug}`);
+  //   setShowDeleteModal(true);
+  //   setSlug(slug);
+  // };
+
+  // const handleTopicDeleteSubmit = async () => {
+  //   try {
+  //     // console.log(" deleteHelpTopics ->", deleteId);
+  //     if (!slug) {
+  //       console.error("No delete ID provided.");
+  //       return;
+  //     }
+
+  //     const response = await fetch(`${Help_Topic_URL}/${slug}`, {
+  //       method: "DELETE",
+  //       headers: {
+  //         Authorization: `Bearer ${session?.user?.token}`,
+  //       },
+  //     });
+  //     toast.error("Help topic deleted successfully");
+  //     // console.log(`response-> ${response}`);
+
+  //     if (response.ok) {
+  //       fetchData();
+  //       setShowDeleteModal(false);
+  //     } else {
+  //       console.error("Error deleting the record:", response.statusText);
+  //     }
+  //   } catch (error) {
+  //     console.error("Error:", error);
+  //   }
+  // };
+
+  // const handleTopicUpdate = (slug) => {
+  //   try {
+  //     setSlug(slug);
+  //     const selectedHelpTopic = helpTopics?.filter(
+  //       (topic) => topic.slug === slug
+  //     );
+  //     // console.log("postedHelpTopics ->", selectedHelpTopic);
+  //     if (selectedHelpTopic) {
+  //       setPostTopic(selectedHelpTopic[0]);
+  //       setShowPostModal(true);
+  //     }
+  //   } catch (error) {
+  //     console.error("Error:", error);
+  //   }
+  // };
+
+  // const handleTopicUpdateSubmit = async (values) => {
+  //   try {
+  //     if (
+  //       !values.name ||
+  //       !values.auth_code ||
+  //       !values.priority ||
+  //       !values.dept_id ||
+  //       !values.status
+  //     ) {
+  //       toast.error("Please fill in all required fields.");
+  //       return;
+  //     }
+
+  //     const response = await fetch(Help_Topic_URL, {
+  //       method: "PUT",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //         Authorization: `Bearer ${session?.user?.token}`,
+  //       },
+  //       body: JSON.stringify({
+  //         ...values,
+  //         slug: slug,
+  //       }),
+  //     });
+
+  //     if (!response.ok) {
+  //       console.log("Failed to submit data");
+  //     } else {
+  //       toast.info("Data Updated successfully");
+  //       fetchData();
+  //       setShowPostModal(false);
+  //       setOpen(false);
+  //       setPostTopic({
+  //         ...postTopic,
+  //         name: "",
+  //         auth_code: "",
+  //         dept_id: "",
+  //         status: "",
+  //         priority: "",
+  //         autoresp: "",
+  //       });
+  //     }
+  //   } catch (error) {
+  //     console.error("Error:", error);
+  //   }
+  // };
+
   return (
     <>
       {/* {session?.token ? ( */}
@@ -242,8 +451,7 @@ export default function HelpDeskTable({
             <button
               type="button"
               className="block rounded-md bg-gray-800 hover:bg-gray-950 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-              onClick={() => handlePost()}
-            >
+              onClick={() => handlePost()}>
               Add Topic
             </button>
           </div>
@@ -254,8 +462,7 @@ export default function HelpDeskTable({
               <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 sm:rounded-lg">
                 <table
                   {...getTableProps()}
-                  className="min-w-full divide-y divide-gray-300"
-                >
+                  className="min-w-full divide-y divide-gray-300">
                   <thead className="bg-gray-100">
                     {headerGroups.map((hg) => (
                       <tr {...hg.getHeaderGroupProps()}>
@@ -266,8 +473,7 @@ export default function HelpDeskTable({
                               column.getSortByToggleProps()
                             )}
                             scope="col"
-                            className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6"
-                          >
+                            className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">
                             {column.render("Header")}
                             <span>
                               {column.isSorted
@@ -281,8 +487,7 @@ export default function HelpDeskTable({
 
                         <th
                           scope="col"
-                          className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
-                        >
+                          className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
                           ACTIONS
                         </th>
                       </tr>
@@ -291,22 +496,19 @@ export default function HelpDeskTable({
                   {searchText === "" ? (
                     <tbody
                       {...getTableBodyProps()}
-                      className="divide-y divide-gray-200 bg-white "
-                    >
+                      className="divide-y divide-gray-200 bg-white ">
                       {page.map((row, i) => {
                         prepareRow(row);
                         return (
                           <tr
                             {...row.getRowProps()}
                             key={i}
-                            className="hover:bg-gray-200"
-                          >
+                            className="hover:bg-gray-200">
                             {row.cells.map((cell) => {
                               return (
                                 <td
                                   {...cell.getCellProps()}
-                                  className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6"
-                                >
+                                  className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
                                   {cell.render("Cell")}
                                 </td>
                               );
@@ -316,16 +518,14 @@ export default function HelpDeskTable({
                               <button
                                 type="button"
                                 className="block rounded-md  px-2 py-1 text-center text-black hover:text-green-600 text-sm font-semibold focus-visible:outline-indigo-600"
-                                onClick={() => handleUpdate(row?.original?.id)}
-                              >
+                                onClick={() => handleUpdate(row?.original?.id)}>
                                 <ArrowUpOnSquareIcon className="h-6" />
                               </button>
 
                               <button
                                 type="button"
                                 className="block rounded-md  px-2 py-1 text-center  text-sm font-semibold text-black hover:text-red-700 focus-visible:outline-indigo-600"
-                                onClick={() => handleDelete(row?.original?.id)}
-                              >
+                                onClick={() => handleDelete(row?.original?.id)}>
                                 <TrashIcon className="h-6" />
                               </button>
                             </td>
@@ -360,16 +560,14 @@ export default function HelpDeskTable({
                             <button
                               type="button"
                               className="block rounded-md  px-2 py-1 text-center text-sm font-semibold text-black hover:text-green-600 focus-visible:outline-indigo-600"
-                              onClick={() => handleUpdate(row?.original?.id)}
-                            >
+                              onClick={() => handleUpdate(row?.original?.id)}>
                               <ArrowUpOnSquareIcon className="h-6" />
                             </button>
 
                             <button
                               type="button"
                               className="block rounded-md  px-2 py-1 text-center text-sm font-semibold text-black  hover:text-red-700 focus-visible:outline-indigo-600"
-                              onClick={() => handleDelete(row?.original?.id)}
-                            >
+                              onClick={() => handleDelete(row?.original?.id)}>
                               <TrashIcon className="h-6" />
                             </button>
                           </td>
@@ -393,8 +591,7 @@ export default function HelpDeskTable({
                     <div>
                       <nav
                         className="isolate inline-flex -space-x-px rounded-md shadow-sm"
-                        aria-label="Pagination"
-                      >
+                        aria-label="Pagination">
                         <button
                           onClick={previousPage}
                           disabled={!canPreviousPage}
@@ -406,8 +603,7 @@ export default function HelpDeskTable({
                              ? "cursor-not-allowed"
                              : "cursor-pointer"
                          }
-                         `}
-                        >
+                         `}>
                           <span className="sr-only">Previous</span>
                           <ChevronLeftIcon
                             className="h-5 w-5"
@@ -435,8 +631,7 @@ export default function HelpDeskTable({
                                   ? " text-white"
                                   : " bg-indigo-300 text-gray-800 hover:bg-indigo-900"
                               }  `}
-                              onClick={() => handlePageClick(page)}
-                            >
+                              onClick={() => handlePageClick(page)}>
                               {page}
                             </button>
                           ))}
@@ -446,13 +641,11 @@ export default function HelpDeskTable({
                             !canNextPage
                               ? "cursor-not-allowed"
                               : "cursor-pointer"
-                          }`}
-                        >
+                          }`}>
                           <span
                             className="sr-only"
                             onClick={nextPage}
-                            disabled={!canNextPage}
-                          >
+                            disabled={!canNextPage}>
                             Next
                           </span>
                           <ChevronRightIcon
@@ -499,6 +692,51 @@ export default function HelpDeskTable({
           setShowDeleteModal={setShowDeleteModal}
         />
       )}
+
+      {/* {session?.user?.token ? (
+        <>
+          <ToastContainer />
+
+          <Tabelmodel
+            title={"Help Topics"}
+            searchText={searchText}
+            setSearchText={setSearchText}
+            myData={helpTopics}
+            filterData={filterHelpTopics}
+            setFilterData={setFilterHelpTopics}
+            handlePostData={handleHelpTopic}
+            handleUpdateData={handleTopicUpdate}
+            handleDeleteData={handleTopicDelete}
+            paginationButtons={paginationButtons}
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+            fetchData={fetchData}
+          />
+        </>
+      ) : (
+        <div>No data available without a token</div>
+      )}
+
+      {showPostModal && (
+        <UpdateOrPostTopicModel
+          postTopic={postTopic}
+          setPostTopic={setPostTopic}
+          modelName={"Help Topics"}
+          setShowPostModal={setShowPostModal}
+          helpTopics={helpTopics}
+          validationSchema={validationSchema}
+          handleTopicUpdateSubmit={handleTopicUpdateSubmit}
+          handleHelpTopicSubmit={handleHelpTopicSubmit}
+        />
+      )}
+
+      {showDeleteModal && (
+        <DeleteConfirmModel
+          modelName={"Help Topics"}
+          handleDeleteSubmit={handleTopicDeleteSubmit}
+          setShowDeleteModal={setShowDeleteModal}
+        />
+      )} */}
     </>
   );
 }

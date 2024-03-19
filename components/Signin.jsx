@@ -21,7 +21,7 @@ export default function Signin({ user }) {
 
   useEffect(() => {
     if (status === "authenticated") {
-      Router.replace("/customer");
+      Router.replace("/help-topics");
     } else {
       Router.replace("/");
     }
@@ -132,23 +132,12 @@ export default function Signin({ user }) {
 
           <p className="mt-10 text-center text-sm text-gray-500">
             <Link
-              href={"/customer"}
+              href={"/help-topics"}
               className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
             >
-              {" "}
               Dashboard
             </Link>
           </p>
-        </div>
-        <div className="mt-10">
-          <button
-            className={`mt-10 uppercase text-sm font-bold tracking-wide text-gray-100 p-3 rounded-lg  focus:outline-none focus:shadow-outline hover:shadow-xl active:scale-90 transition duration-150  ${
-              session?.user?.accessToken ? "bg-red-400" : "bg-green-400"
-            }`}
-            onClick={() => (session?.user?.accessToken ? signOut() : signIn())}
-          >
-            {session?.user?.accessToken ? "Sign Out" : "Sign In"}
-          </button>
         </div>
       </div>
     </>
