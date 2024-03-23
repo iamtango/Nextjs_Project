@@ -1,36 +1,72 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# My NextJs Learning by using the App Router
 
-## Getting Started
+## next Jsis fullStack framework so to write the backend we write it in the api folder and here we write route.js file
 
-First, run the development server:
+## Next.js is a React framework for building full-stack web applications. You use React Components to build user interfaces, and Next.js for additional features and optimizations
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+#### Routing :- A file-system based router built on top of Server Components that supports layouts, nested routing & more
+
+    - Create a folder as same as the url & create page.js inside that folder ti access the route otherwise it gives an error.
+
+#### Link :- Here we need to provide the href={''} instead of to={''}
+
+# Dynammic Router
+
+- A Dynamic Segment can be created by wrapping a folder's name in square brackets: [folderName]
+
+```
+- app/blog/[slug]/page.js      :- 	/blog/a     :- 	{ slug: 'a' }
+                               :-  /blog/b      :- { slug: 'b' }
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- Catch-all Segments:- Dynamic Segments can be extended to catch-all subsequent segments by adding an ellipsis inside the brackets [...folderName]
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+```
+- app/shop/[...slug]/page.js   :- /shop/a	    :- { slug: ['a'] }
+                               :- /shop/a/b     :- { slug: ['a','b'] }
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+- Optional Catch-all Segments:- Catch-all Segments can be made optional by including the parameter in double square brackets: [[...folderName]].
 
-## Learn More
+```
+- app/shop/[[...slug]]/page.js :- /shop         :- {}
+                               :- /shop/a       :- { slug: ['a'] }
+```
 
-To learn more about Next.js, take a look at the following resources:
+### The difference between catch-all and optional catch-all segments is that with optional, the route without the parameter is also matched
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+#### To add the middleware we must need to create an middleware.js file in the app level folder
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+### Hooks
 
-## Deploy on Vercel
+- usePathname :- usePathname is a Client Component hook that lets you read the current URL's pathname & it comes from next/navigation
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- useRouter :- The useRouter hook allows you to programmatically change routes from Client Components.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- redirect :- For Server Components, use the redirect function instead of useRouter()
+
+## Server components
+
+- It cannot Listen to browser Events
+- It cannot access browser API's
+- It cannot Maintain states
+- It cannot have useEffect
+
+#### We can catch data in the Nextjs inside Fetch API only
+
+## Layout
+
+- App Directory must include root layout & the Root Layout is server component & cannot be set to client component.
+- In the Mainlayout we must need to incluse the Html and body tag.
+- we can create multiple layout or we can say seprate layout for each individual routes.
+
+#### template.js
+
+- If u want to use the useEffect then only u need to use the template.jsx file otherwise use the layout.jsx and it is nested inside the layout.jsx
+
+- A template file is similar to a layout in that it wraps each child layout or page. Unlike layouts that persist across routes and maintain state, templates create a new instance for each of their children on navigation.
+- While less common, you might choose a template over a layout but if you want Features that rely on useEffect and useState
+
+- By default, template is a Server Component, but can also be used as a Client Component through the "use client" directive.
+
+- When a user navigates between routes that share a template, a new instance of the component is mounted, DOM elements are recreated, state is not preserved, and effects are re-synchronized.
