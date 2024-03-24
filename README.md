@@ -1,6 +1,6 @@
 # My NextJs Learning by using the App Router
 
-## next Jsis fullStack framework so to write the backend we write it in the api folder and here we write route.js file
+## next Js is fullStack framework so to write the backend we write it in the api folder and here we write route.js file
 
 ## Next.js is a React framework for building full-stack web applications. You use React Components to build user interfaces, and Next.js for additional features and optimizations
 
@@ -70,3 +70,55 @@
 - By default, template is a Server Component, but can also be used as a Client Component through the "use client" directive.
 
 - When a user navigates between routes that share a template, a new instance of the component is mounted, DOM elements are recreated, state is not preserved, and effects are re-synchronized.
+
+### Linking and Navigating
+
+##### There are four ways to navigate between routes in Next.js
+
+- Using the <Link> Component
+- Using the useRouter hook (Client Components)
+- Using the redirect function (Server Components)
+- Using the native History API
+
+#### Link tag
+
+- is a built-in component that extends the HTML anchor tag to provide prefetching and client-side navigation between routes.It is the primary and recommended way to navigate between routes in Next.js.
+
+import Link from 'next/link'
+
+- For dynamic segments, we can use {} & in that we use template literals.
+
+- Use the Link component to navigate between routes unless you have a specific requirement for using useRouter.
+
+#### Prefetching
+
+- Prefetching is a way to preload a route in the background before the user visits it.
+
+##### There are two ways routes are prefetched in Next.js:
+
+- Link component: Routes are automatically prefetched as they become visible in the user's viewport. Prefetching happens when the page first loads or when it comes into view through scrolling.
+
+- router.prefetch(): The useRouter hook can be used to prefetch routes programmatically.
+
+##### The Link's prefetching behavior is different for static and dynamic routes:
+
+- Static Routes: prefetch defaults to true. The entire route is prefetched and cached.
+- Dynamic Routes: prefetch default to automatic. Only the shared layout, down the rendered "tree" of components until the first loading.js file, is prefetched and cached for 30s. This reduces the cost of fetching an entire dynamic route, and it means you can show an instant loading state for better visual feedback to users.
+  You can disable prefetching by setting the prefetch prop to false.
+
+- #### Prefetching is not enabled in development, only in production.
+
+#### useRouter()
+
+- It can be used inside client components & import from next/navigation. before next 13 it can comes from next/router
+- we can use the router.prefetch() to prefetch routes programmatically.
+
+#### redirect function
+
+- For Server Components, use the redirect function instead useRouter, comes from next/navigation
+
+eg: redirect('/login')
+
+- redirect internally throws an error so it should be called outside of try/catch blocks
+- redirect can be called in Client Components during the rendering process but not in event handlers. You can use the useRouter hook instead.
+- redirect also accepts absolute URLs and can be used to redirect to external links.
