@@ -1,5 +1,7 @@
 # My NextJs Learning by using the App Router
 
+- Doc Link [https://nextjs.org/docs]
+
 ## next Js is fullStack framework so to write the backend we write it in the api folder and here we write route.js file
 
 ## Next.js is a React framework for building full-stack web applications. You use React Components to build user interfaces, and Next.js for additional features and optimizations
@@ -122,3 +124,23 @@ eg: redirect('/login')
 - redirect internally throws an error so it should be called outside of try/catch blocks
 - redirect can be called in Client Components during the rendering process but not in event handlers. You can use the useRouter hook instead.
 - redirect also accepts absolute URLs and can be used to redirect to external links.
+
+#### Caching
+
+- Next.js has an in-memory client-side cache called the Router Cache
+- The cache is reused as much as possible, instead of making a new request to the server, improving performance by reducing the number of requests and data transferred to server
+
+#### Partial Rendering
+
+- Partial rendering means only the route segments that change on navigation re-render on the client, and any shared segments are preserved.
+- Without partial rendering, each navigation would cause the full page to re-render on the client. Rendering only the segment that changes reduces the amount of data transferred and execution time, leading to improved performance.
+
+#### Soft Navigation
+
+- Browsers perform a "hard navigation" when navigating between pages
+- Next.js Router enables "soft navigation" between pages, ensuring only the route segments that have changed are re-rendered (partial rendering).This enables client React state to be preserved during navigation.
+
+#### Loading UI and Streaming
+
+- The special file loading.js helps you create meaningful Loading UI with React Suspense
+- With this convention, you can show an instant loading state from the server
