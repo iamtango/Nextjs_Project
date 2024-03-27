@@ -144,3 +144,40 @@ eg: redirect('/login')
 
 - The special file loading.js helps you create meaningful Loading UI with React Suspense
 - With this convention, you can show an instant loading state from the server
+
+### Server-Side Rendering (SSR)
+
+- SSR Improve the performance by showing non-interactive pages.
+- With SSR, there's a series of steps that need to be completed before a user can see and interact with a page:
+
+  - First, all data for a given page is fetched on the server.
+  - The server then renders the HTML for the page.
+  - The HTML, CSS, and JavaScript for the page are sent to the client.
+  - A non-interactive user interface is shown using the generated HTML, and CSS.
+  - Finally, React hydrates the user interface to make it interactive.
+
+- Render or load HTML for server page once.
+
+#### client:- react hydrate once after all the components been downloaded
+
+#### Error Handling
+
+- The error.js file convention allows you to gracefully handle unexpected runtime errors in nested routes.
+- Error component must be client component
+
+#### global-error.js
+
+- To specifically handle errors in root layout.js, use a variation of error.js called app/global-error.js located in the root app directory.
+- global-error.js replaces the root layout.js when active and so must define its own html and body tags.
+
+#### Parallel Routes
+
+- Parallel Routes allows you to simultaneously or conditionally render one or more pages within the same layout. They are useful for highly dynamic sections of an app, such as dashboards and feeds on social sites.
+- Slots
+
+  - Parallel routes are created using named slots. Slots are defined with the @folder convention. For example, the following file structure defines two slots: @analytics and @team.
+
+- default.js
+  - can define a default.js file to render as a fallback for unmatched slots during the initial load or full-page reload.
+  - On reload or rerender , it will first try to Render the unmac=tch slot's default.js file, if not available then show 404 error.
+  - Ensure that content of modal doesn't get rerender when it not active.
