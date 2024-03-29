@@ -2,13 +2,13 @@
 
 - Doc Link [https://nextjs.org/docs]
 
-## next Js is fullStack framework so to write the backend we write it in the api folder and here we write route.js file
+## Next Js is fullStack framework so to write the backend we write it in the api folder and here we write in route.js file
 
 ## Next.js is a React framework for building full-stack web applications. You use React Components to build user interfaces, and Next.js for additional features and optimizations
 
 #### Routing :- A file-system based router built on top of Server Components that supports layouts, nested routing & more
 
-    - Create a folder as same as the url & create page.js inside that folder ti access the route otherwise it gives an error.
+    - Create a folder as same as the You wanted in url & create page.js inside that folder to access the route otherwise it gives an error.
 
 #### Link :- Here we need to provide the href={''} instead of to={''}
 
@@ -181,3 +181,29 @@ eg: redirect('/login')
   - can define a default.js file to render as a fallback for unmatched slots during the initial load or full-page reload.
   - On reload or rerender , it will first try to Render the unmac=tch slot's default.js file, if not available then show 404 error.
   - Ensure that content of modal doesn't get rerender when it not active.
+
+#### Intercepting Routes
+
+- It allows you to load a route from another part of your application within the current layout. This routing can be useful when you want to display the content of a route without the user switching to a different context.
+
+#### Intercepting routes can be defined with the (..) convention, which is similar to relative path convention ../ but for segments.
+
+- You can use:
+  - (.) to match segments on the same level
+  - (..) to match segments one level above
+  - (..)(..) to match segments two levels above
+  - (...) to match segments from the root app directory
+
+It can be use with parallel routes
+
+#### Route Handlers
+
+- It allow you to create custom request handlers
+- Route Handlers are only available inside the app directory. They are the equivalent of API Routes inside the pages directory meaning you do not need to use API Routes and Route Handlers together.
+- route.js
+  - By default rouye handlers are catched when using get method
+
+### Middleware
+
+- It allows you to run code before a request is completed
+- It runs before cached content and routes are matched
