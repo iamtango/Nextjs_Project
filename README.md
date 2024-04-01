@@ -207,3 +207,20 @@ It can be use with parallel routes
 
 - It allows you to run code before a request is completed
 - It runs before cached content and routes are matched
+
+# Next Auth
+
+### useSession
+
+- If there is session present in the session it will return it majorly it is use for the getting token
+- There is 3 values in the data i.e session, undefine, null
+
+#### It is hook and can be use in the functional component Only but only in client component
+
+### getSession
+
+- It is similar to useSession but it is not hook so we can use anywhere but only in client component
+
+### getServerSession
+
+- It is similar to useSession or getSession but it is not hook so we can use anywhere but only in client component
