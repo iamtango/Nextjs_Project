@@ -224,3 +224,20 @@ It can be use with parallel routes
 ### getServerSession
 
 - It is similar to useSession or getSession but it is not hook so we can use anywhere but only in client component
+
+#### loading.jsx
+
+- when we want to show the loading when going to that component then use the loading.jsx and in that component page if u want to show the loading to perticular section of page use the react Suspense and fallback in between suspense use the component to show the loading in the page
+
+###### After going on the anyling it automatically prefectched that data in the browser to reduce the task until u refresh it manually
+
+#### _SSR_
+
+- If u made any request to the server side component the request going to server & server fetch the necessary data for it then generate the html css & js on the client side in the browser & then it going to first render the non intractive version of the site eg. html & css & then js will be added
+- Until all the components are not downloaded in the client side browser react will not hydrate the component
+
+#### error.jsx
+
+- It is client component
+- If error occcur in the perticular portion of the page it will not break the whole UI it just brak perticular portion
+- It take 2 props error and reset
