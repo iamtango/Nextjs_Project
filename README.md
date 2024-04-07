@@ -1,6 +1,10 @@
 # My NextJs Learning by using the App Router
 
-- Doc Link [https://nextjs.org/docs]
+- [Doc Link](https://nextjs.org/docs)
+
+# `npx create-next-app@latest` It help to install the Next js in your project
+
+- `npm run dev` It help to start the next app i.e runing the server
 
 ## Next Js is fullStack framework so to write the backend we write it in the api folder and here we write in route.js file
 
@@ -12,7 +16,7 @@
 
 #### Link :- Here we need to provide the href={''} instead of to={''}
 
-# Dynammic Router
+#
 
 - A Dynamic Segment can be created by wrapping a folder's name in square brackets: [folderName]
 
@@ -41,7 +45,7 @@
 
 ### Hooks
 
-- usePathname :- usePathname is a Client Component hook that lets you read the current URL's pathname & it comes from next/navigation
+- usePathname :- usePathname is a Client Component hook that let's you read the current URL's pathname & it comes from next/navigation
 
 - useRouter :- The useRouter hook allows you to programmatically change routes from Client Components.
 
@@ -59,8 +63,8 @@
 ## Layout
 
 - App Directory must include root layout & the Root Layout is server component & cannot be set to client component.
-- In the Mainlayout we must need to incluse the Html and body tag.
-- we can create multiple layout or we can say seprate layout for each individual routes.
+- In the Mainlayout we must need to include the Html and body tag.
+- we can create multiple layout or we can say separate layout for each individual routes.
 
 #### template.js
 
