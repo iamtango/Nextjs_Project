@@ -245,3 +245,89 @@ It can be use with parallel routes
 - It is client component
 - If error occcur in the perticular portion of the page it will not break the whole UI it just brak perticular portion
 - It take 2 props error and reset
+
+
+
+## Route Groups
+
+- In the app directory, nested folders are normally mapped to URL paths. However, you can mark a folder as a Route Group to prevent the folder from being included in the route's URL path.
+- This allows you to organize your route segments and project files into logical groups without affecting the URL path structure
+  A route group can be created by wrapping a folder's name in parenthesis: `(folderName)`
+- This indicates the folder is for organizational purposes and should not be included in the route's URL path.
+
+Note:- The naming of route groups has no special significance other than for organization. They do not affect the URL path
+
+## Private Folders
+
+- Private folders can be created by prefixing a folder with an underscore: `_folderName`
+- This indicates the folder is a private implementation detail and should not be considered by the routing system, thereby opting the folder and all its subfolders out of routing.
+- It can be useful for:
+  - Separating UI logic from routing logic.
+  - Consistently organizing internal files across a project and the Next.js ecosystem
+  - Sorting and grouping files in code editors.
+  - Avoiding potential naming conflicts with future Next.js file conventions.
+
+## Module Path Aliases
+
+- Next.js supports Module Path Aliases which make it easier to read and maintain imports across deeply nested project files.
+
+Note:- `@/` indicate the root directory
+
+## Dynamic Routes
+
+- When you don't know the exact segment names ahead of time and want to create routes from dynamic data, you can use Dynamic Segments that are filled in at request time or prerendered at build time then use the Dynamic routes
+- A Dynamic Segment can be created by wrapping a folder's name in square brackets: `[folderName]`. For example, `[id]` or `[slug]`.
+- Dynamic Segments are passed as the params prop to layout, page, route, and generateMetadata functions.
+
+### Catch-all Segments
+
+- Dynamic Segments can be extended to catch-all subsequent segments by adding an ellipsis inside the brackets [...folderName]
+- app/shop/[...slug]/page.js result will be ==> /shop/a
+
+## Optional Catch-all Segments
+
+- Catch-all Segments can be made optional by including the parameter in double square brackets: [[...folderName]].
+
+#### Note:- The difference between catch-all and optional catch-all segments is that with optional, the route without the parameter is also matched.
+
+- app/shop/[[...slug]]/page.js result will be ==> /shop {}
+- app/shop/[[...slug]]/page.js result will be ==> /shop/a
+
+## Parallel Routes
+
+- Parallel Routes allows you to simultaneously or conditionally render one or more pages within the same layout. They are useful for highly dynamic sections of an app, such as dashboards and feeds on social sites.
+- Parallel routes are created using named slots. Slots are defined with the @folder convention. For example, @analytics and @team
+- Slots are passed as props to the shared parent layout i.e component in app/layout.js now accepts the @analytics and @team slots props, and can render them in parallel alongside the children prop:
+
+Note:- slots are not route segments and do not affect the URL structure
+
+By default, Next.js keeps track of the active state (or subpage) for each slot
+-You can define a default.js file to render as a fallback for unmatched slots during the initial load or full-page reload.
+
+## Route Handlers
+
+- Route Handlers allow you to create custom request handlers for a given route using the Web Request and Response APIs.
+- Route Handlers are defined in a route.js|ts file inside the app directory
+- Route Handlers can be nested inside the app directory, similar to page.js and layout.js. But there cannot be a route.js file at the same route segment level as page.js
+- The following HTTP methods are supported: GET, POST, PUT, PATCH, DELETE, HEAD, and OPTIONS. If an unsupported method is called, Next.js will return a 405 Method Not Allowed response
+- Using the Request object with the GET method.
+
+# Middleware
+
+- Use the file middleware.js|ts in the root of your project to define Middleware.
+- Middleware allows you to run code before a request is completed.
+- Then, based on the incoming request, you can modify the response by rewriting, redirecting, modifying the request or response headers, or responding directly.
+- Middleware runs before cached content and routes are matched
+- Integrating Middleware into your application can lead to significant improvements in performance, security, and user experience.
+- Middleware will be invoked for every route in your project
+- Middleware is particularly effective include in some scenarios
+  - Authentication and Authorization: Ensure user identity and check session cookies before granting access to specific pages or API routes.
+  - Path Rewriting
+  - Server-Side Redirects: Redirect users at the server level based on certain conditions
+
+Note:- While only one middleware.js file is supported per project but you can still organize your middleware logic modularly Break out middleware functionalities into separate .js files and import them into your main middleware.js. By enforcing a single middleware file, it simplifies configuration, prevents potential conflicts, and optimizes performance by avoiding multiple middleware layers.
+
+#### Matcher
+
+- matcher allows you to filter Middleware to run on specific paths.
+- You can match a single path or multiple paths with an array syntax
