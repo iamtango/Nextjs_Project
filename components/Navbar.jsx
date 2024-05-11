@@ -45,12 +45,12 @@ const Navbar = () => {
                   <div className="flex flex-shrink-0 items-center">
                     <img
                       className="block h-8 w-auto lg:hidden"
-                      src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fauth0.com%2Fblog%2Fusing-nextjs-server-actions-to-call-external-apis%2F&psig=AOvVaw2WspKPEEhMUScsFl9mMxFo&ust=1715352509150000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCPjdtpzogIYDFQAAAAAdAAAAABAE"
+                      src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS8zW0EU8EE_kTsu7xloGP8RLynPduoCQbWof92KIYWjg&s"
                       alt="Tango"
                     />
                     <img
                       className="hidden h-8 w-auto lg:block"
-                      src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fauth0.com%2Fblog%2Fusing-nextjs-server-actions-to-call-external-apis%2F&psig=AOvVaw2WspKPEEhMUScsFl9mMxFo&ust=1715352509150000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCPjdtpzogIYDFQAAAAAdAAAAABAE"
+                      src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS8zW0EU8EE_kTsu7xloGP8RLynPduoCQbWof92KIYWjg&s"
                       alt="Tango"
                     />
                     {/* <Image

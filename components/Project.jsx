@@ -18,7 +18,7 @@ export default function Project() {
               Full name
             </dt>
             <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-              Margot Foster
+              Vedang Nikure
             </dd>
           </div>
           <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
@@ -26,7 +26,7 @@ export default function Project() {
               Application for
             </dt>
             <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-              Backend Developer
+              React Developer
             </dd>
           </div>
           <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
@@ -34,7 +34,7 @@ export default function Project() {
               Email address
             </dt>
             <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-              margotfoster@example.com
+              vedangnikure07@gmail.com
             </dd>
           </div>
           <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
@@ -50,11 +50,7 @@ export default function Project() {
               About
             </dt>
             <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-              Fugiat ipsum ipsum deserunt culpa aute sint do nostrud anim
-              incididunt cillum culpa consequat. Excepteur qui ipsum aliquip
-              consequat sint. Sit id mollit nulla mollit nostrud in ea officia
-              proident. Irure nostrud pariatur mollit ad adipisicing
-              reprehenderit deserunt qui eu.
+              I am React Developer work on Nextjs and also work on React Native
             </dd>
           </div>
           <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
@@ -64,8 +60,7 @@ export default function Project() {
             <dd className="mt-2 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
               <ul
                 role="list"
-                className="divide-y divide-gray-100 rounded-md border border-gray-200"
-              >
+                className="divide-y divide-gray-100 rounded-md border border-gray-200">
                 <li className="flex items-center justify-between py-4 pl-4 pr-5 text-sm leading-6">
                   <div className="flex w-0 flex-1 items-center">
                     <PaperClipIcon
@@ -74,7 +69,7 @@ export default function Project() {
                     />
                     <div className="ml-4 flex min-w-0 flex-1 gap-2">
                       <span className="truncate font-medium">
-                        resume_back_end_developer.pdf
+                        resume_react_developer.pdf
                       </span>
                       <span className="flex-shrink-0 text-gray-400">2.4mb</span>
                     </div>
@@ -82,8 +77,7 @@ export default function Project() {
                   <div className="ml-4 flex-shrink-0">
                     <a
                       href="#"
-                      className="font-medium text-indigo-600 hover:text-indigo-500"
-                    >
+                      className="font-medium text-indigo-600 hover:text-indigo-500">
                       Download
                     </a>
                   </div>
@@ -104,8 +98,7 @@ export default function Project() {
                   <div className="ml-4 flex-shrink-0">
                     <a
                       href="#"
-                      className="font-medium text-indigo-600 hover:text-indigo-500"
-                    >
+                      className="font-medium text-indigo-600 hover:text-indigo-500">
                       Download
                     </a>
                   </div>
